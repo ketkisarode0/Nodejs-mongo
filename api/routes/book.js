@@ -33,11 +33,16 @@ router.post('/', (req, res, next)=>{
          name: req.body.name,
         author: req.body.author
 
-    })
+    }) 
     book.save()
     .then(result=>
         {
             console.log(result)
+            res.status(201).json({
+                message: 'Handling POST Request/ books',
+                book: book   
+           });
+            
         })
     .catch(err=>{
             console.log(err);
@@ -46,12 +51,7 @@ router.post('/', (req, res, next)=>{
                 message: 'Internal server error'
             });
         });
-    res.status(201).json({
-        message: 'Handling POST Request/ books',
-        book: book
-        
-        
-   });
+    
 });
 
 
