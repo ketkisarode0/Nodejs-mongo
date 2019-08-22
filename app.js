@@ -4,7 +4,7 @@ var timeout = require('connect-timeout')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 require("express-async-errors");
-const bookRoutes = require('./api/routes/book');
+const bookRoutes = require('./api/routes/books');
 const receipeRoutes = require('./api/routes/receipe');
 const helloWorldRoutes = require('./api/routes/helloWorld');
 app.use(timeout('3s'))
@@ -14,7 +14,7 @@ var promise = mongoose.connect('mongodb://localhost/receipeBlog', {
     useNewUrlParser: true,
 });
 
-promise.then(function(db){
+promise.then(function(db){ 
   console.log('DATABASE CONNECTED!!');
 }).catch(function(err){
   console.log('CONNECTION ERROR', err);
@@ -24,23 +24,7 @@ promise.then(function(db){
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-//  app.use((req, res, next)=>{
-//      res.header('Access-Control-Allow-Origin', "*");
-        
-
-//          res.header(
-//     'Access-Control-Allow-Headers', 
-//     'Origin, X-Requested-With, Content-Type, Accept, Authorization' 
-//     );
-//     if (req.method === 'OPTIONS'){
-//         res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, PATCH, DELETE');
-//         return res.status(200).json({});
-//     }
-//     next();
-// })
-
-app.use('/book', bookRoutes);
+app.use('/books', bookRoutes);
 app.use('/receipe', receipeRoutes);
 app.use('/',helloWorldRoutes);
 
