@@ -3,10 +3,12 @@ const app = express();
 const timeout = require("connect-timeout");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-require("express-async-errors");
+// const renameIdPlugin = require('mongoose-rename-id');
+// require("express-async-errors");
+const Joi = require('joi');
 const morgan = require('morgan')
-const bookRoutes = require("./api/routes/books");
-const helloWorldRoutes = require("./api/routes/helloWorld");
+const bookRoutes = require("./api/handler/books");
+// const Book = require("./routes");
 app.use(timeout("3s"));
 app.use(morgan('dev'))
 mongoose.Promise = global.Promise;
@@ -25,8 +27,7 @@ promise
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/books", bookRoutes);
-app.use("/", helloWorldRoutes);
+app.use("/books", bookRoutes);  
 
 app.use((req, res, next) => {
   req.status = 404;
